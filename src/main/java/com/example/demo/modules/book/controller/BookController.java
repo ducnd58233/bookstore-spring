@@ -1,6 +1,7 @@
 package com.example.demo.modules.book.controller;
 
 import com.example.demo.common.Paging;
+import com.example.demo.common.UID;
 import com.example.demo.modules.book.biz.BookRepository;
 import com.example.demo.modules.book.model.BookEntity;
 import com.example.demo.modules.book.model.BookReq;
@@ -29,7 +30,8 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public BookEntity getBookById(@PathVariable(value="id") Long id) {
+    public BookEntity getBookById(@PathVariable(value="id") String uid) {
+        Long id = UID.DecomposeUID(uid).getLocalId();
         return bookRepo.findOneByIdAndStatus(id, STATUS_ACTIVE);
     }
 
@@ -45,7 +47,8 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteBook(@PathVariable(value="id") Long id) {
+    public String deleteBook(@PathVariable(value="id") String uid) {
+        Long id = UID.DecomposeUID(uid).getLocalId();
         if (bookRepo.findOneByIdAndStatus(id, STATUS_ACTIVE) == null) {
             return "Book already deleted!";
         }
@@ -54,7 +57,8 @@ public class BookController {
     }
 
     @PatchMapping("/{id}")
-    public String updateBook(@PathVariable(value="id") Long id, @RequestBody BookReq req) {
+    public String updateBook(@PathVariable(value="id") String uid, @RequestBody BookReq req) {
+        Long id = UID.DecomposeUID(uid).getLocalId();
         BookEntity data = bookRepo.findOneByIdAndStatus(id, STATUS_ACTIVE);
         if (data == null) {
             return "Book already deleted!";

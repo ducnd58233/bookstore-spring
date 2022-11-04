@@ -1,21 +1,17 @@
 package com.example.demo.modules.book.model;
 
+import com.example.demo.common.BaseEntity;
+import com.example.demo.common.UID;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
-import java.time.OffsetDateTime;
+
+import static com.example.demo.common.Constants.DbTypeBook;
+import static com.example.demo.common.Constants.ShardTypeBook;
 
 @Getter @Setter
 @Entity
 @Table(name="books")
-public class BookEntity {
-    @Id
-    @Setter(AccessLevel.NONE)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-
+public class BookEntity extends BaseEntity {
     @Column(name="title")
     private String title;
 
@@ -28,14 +24,10 @@ public class BookEntity {
     @Column(name="price")
     private Double price;
 
-    @Column(name="status")
-    private int status;
-
-    @CreationTimestamp
-    @Column(name="created_at", nullable=false, updatable=false, columnDefinition="TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name="updated_at", columnDefinition="TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime updatedAt;
+    public String getUid() {
+        System.out.println(this.getId());
+        UID val = new UID(this.getId(), DbTypeBook, ShardTypeBook);
+        super.setUid(String.valueOf(val));
+        return String.valueOf(val);
+    }
 }
