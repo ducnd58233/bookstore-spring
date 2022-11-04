@@ -20,13 +20,13 @@ public class BookEntity {
     private String title;
 
     @Column(name="year")
-    private int year;
+    private Integer year;
 
     @Column(name="description")
     private String description;
 
     @Column(name="price")
-    private double price;
+    private Double price;
 
     @Column(name="status")
     private int status;

@@ -1,6 +1,5 @@
 package com.example.demo.modules.book.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +7,8 @@ import lombok.Setter;
 public class BookReq {
     private Long id;
     private String title;
-    private int year;
+    private Integer year;
     private String description;
-    private double price;
+    private Double price;
     private int status;
 }

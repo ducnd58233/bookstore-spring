@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import static com.example.demo.common.Constants.STATUS_ACTIVE;
+import static com.example.demo.common.Constants.STATUS_INACTIVE;
 
 @RestController
 @RequestMapping(value="/books")
@@ -41,6 +42,31 @@ public class BookController {
         book.setPrice(req.getPrice());
         bookRepo.save(book);
         return "Create book successful!";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteBook(@PathVariable(value="id") Long id) {
+        if (bookRepo.findOneByIdAndStatus(id, STATUS_ACTIVE) == null) {
+            return "Book already deleted!";
+        }
+        bookRepo.deleteBook(id, STATUS_INACTIVE);
+        return "Delete book successful!";
+    }
+
+    @PatchMapping("/{id}")
+    public String updateBook(@PathVariable(value="id") Long id, @RequestBody BookReq req) {
+        BookEntity data = bookRepo.findOneByIdAndStatus(id, STATUS_ACTIVE);
+        if (data == null) {
+            return "Book already deleted!";
+        }
+
+        if (req.getTitle() != null) { data.setTitle(req.getTitle()); }
+        if (req.getYear() != null) { data.setYear(req.getYear()); }
+        if (req.getDescription() != null) { data.setDescription(req.getDescription()); }
+        if (req.getPrice() != null) { data.setPrice(req.getPrice()); }
+
+        bookRepo.save(data);
+        return "Book updated successful!";
     }
 }
 
