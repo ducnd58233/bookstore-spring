@@ -9,31 +9,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Repository
-public interface BookRepository extends JpaRepository<BookEntity, Long> {
+public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     // Get all books
     Page<BookEntity> findAllByStatus(int status, Pageable pageable);
-    List<BookEntity> findByTitleContaining(String title);
-    List<BookEntity> findByYear(int year);
 
     // Get book
-    BookEntity findOneByIdAndStatus(Long id, int status);
-
-    // Update book
-    @Transactional
-    @Modifying
-    @Query(nativeQuery=true, value="UPDATE books SET title=?3 " +
-            "AND year=?4 " +
-            "AND description=?5" +
-            "AND price=?6" +
-            "WHERE id=?1 status=?2")
-    BookEntity updateBook(Long id, int status, String title, int year, String description, double price);
+    BookEntity findOneByIdAndStatus(Integer id, int status);
 
     // Soft delete book
     @Transactional
     @Modifying
-    @Query(nativeQuery=true, value="UPDATE books SET status=?3 WHERE id=?1 AND status=?2")
-    BookEntity deleteBook(Long id, int fromStatus, int toStatus);
+    @Query(nativeQuery=true, value="UPDATE books SET status=?2 WHERE id=?1")
+    void deleteBook(Integer id, int toStatus);
 }
