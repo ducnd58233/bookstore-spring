@@ -3,14 +3,15 @@ USE `book_store`;
 
 DROP TABLE IF EXISTS `books`;
 CREATE TABLE `books` (
-    `id` int NOT NULL AUTO_INCREMENT,
-    `title` varchar(255),
-    `year` int,
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(255),
+    `year` INT,
     `description` text,
-    `price` double,
-    `status` int NOT NULL DEFAULT '1',
-    `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `price` DOUBLE,
+    `image` JSON NOT NULL,
+    `status` INT NOT NULL DEFAULT '1',
+    `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY `status` (`status`) USING BTREE
 );
@@ -24,27 +25,40 @@ INSERT INTO `books` (`title`, `year`, `description`, `price`, `status`, `created
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `salt` varchar(50) DEFAULT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `role` enum('user','admin') NOT NULL DEFAULT 'user',
-  `avatar` json DEFAULT NULL,
-  `status` int NOT NULL DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(50) NOT NULL,
+    `password` VARCHAR(50) NOT NULL,
+    `salt` VARCHAR(50) DEFAULT NULL,
+    `last_name` VARCHAR(50) NOT NULL,
+    `first_name` VARCHAR(50) NOT NULL,
+    `phone` VARCHAR(20) DEFAULT NULL,
+    `role` enum('user','admin') NOT NULL DEFAULT 'user',
+    `avatar` JSON DEFAULT NULL,
+    `status` INT NOT NULL DEFAULT '1',
+    `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `email` (`email`)
 );
 
 DROP TABLE IF EXISTS `book_likes`;
 CREATE TABLE `book_likes` (
-  `book_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`book_id`,`user_id`),
-  KEY `user_id` (`user_id`)
+    `book_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`book_id`,`user_id`),
+    KEY `book_id` (`book_id`)
 );
+
+CREATE TABLE IF NOT EXISTS `images` (
+    `id` INT NOT NULL,
+    `url` TEXT NOT NULL,
+    `width` DOUBLE NOT NULL,
+    `height` DOUBLE NOT NULL,
+    `cloud_name` VARCHAR(120) NULL,
+    `extension` VARCHAR(10) NULL,
+    `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+);
+

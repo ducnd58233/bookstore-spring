@@ -9,19 +9,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Repository
-public interface BookRepository extends JpaRepository<BookEntity, Long> {
+public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     // Get all books
     Page<BookEntity> findAllByStatus(int status, Pageable pageable);
 
     // Get book
-    BookEntity findOneByIdAndStatus(Long id, int status);
+    BookEntity findOneByIdAndStatus(Integer id, int status);
 
     // Soft delete book
     @Transactional
     @Modifying
     @Query(nativeQuery=true, value="UPDATE books SET status=?2 WHERE id=?1")
-    void deleteBook(Long id, int toStatus);
+    void deleteBook(Integer id, int toStatus);
 }

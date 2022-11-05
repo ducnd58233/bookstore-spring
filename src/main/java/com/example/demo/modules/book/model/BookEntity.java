@@ -3,6 +3,9 @@ package com.example.demo.modules.book.model;
 import com.example.demo.common.BaseEntity;
 import com.example.demo.common.UID;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+
 import javax.persistence.*;
 
 import static com.example.demo.common.Constants.DbTypeBook;
@@ -24,8 +27,13 @@ public class BookEntity extends BaseEntity {
     @Column(name="price")
     private Double price;
 
+    @Transient
+    private Integer totalLikes;
+
+//    @Transient
+//    private MultipartFile file;
+
     public String getUid() {
-        System.out.println(this.getId());
         UID val = new UID(this.getId(), DbTypeBook, ShardTypeBook);
         super.setUid(String.valueOf(val));
         return String.valueOf(val);
