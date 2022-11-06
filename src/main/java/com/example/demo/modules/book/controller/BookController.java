@@ -25,7 +25,7 @@ public class BookController {
     @Autowired
     BookLikeRepository blRepo;
 
-    @GetMapping
+    @GetMapping(value="/all")
     public Page<BookEntity> getAllBooks(@RequestParam(name="page", required=false) Integer pageNum,
                             @RequestParam(name="size", required=false) Integer pageSize, // limit
                             @RequestParam(name="sortBy", required=false) String sortBy,
@@ -40,7 +40,7 @@ public class BookController {
         return response;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("details/{id}")
     public BookEntity getBookById(@PathVariable(value="id") String uid) {
         Integer id = UID.DecomposeUID(uid).getLocalId();
         return bookRepo.findOneByIdAndStatus(id, STATUS_ACTIVE);
