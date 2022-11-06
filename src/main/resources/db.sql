@@ -8,7 +8,7 @@ CREATE TABLE `books` (
     `year` INT,
     `description` text,
     `price` DOUBLE,
-    `image` JSON NOT NULL,
+    `image` JSON NULL,
     `status` INT NOT NULL DEFAULT '1',
     `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -23,12 +23,23 @@ INSERT INTO `books` (`title`, `year`, `description`, `price`, `status`, `created
 ('Book 4', 1999, 'This is book 4 test', 400000, 1, '2022-11-04 01:30:56', '2022-11-04 01:30:56'),
 ('Book 5', 1956, 'This is book 5 test', 230000, 1, '2022-11-04 01:30:57', '2022-11-04 01:30:57');
 
+DROP TABLE IF EXISTS `authens`;
+CREATE TABLE `authens` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(155) NOT NULL,
+    `password` VARCHAR(256) NOT NULL,
+    `status` INT NOT NULL DEFAULT '1',
+    `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `email` (`email`)
+);
+
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `email` VARCHAR(50) NOT NULL,
-    `password` VARCHAR(50) NOT NULL,
-    `salt` VARCHAR(50) DEFAULT NULL,
+    `password` VARCHAR(256) NOT NULL,
     `last_name` VARCHAR(50) NOT NULL,
     `first_name` VARCHAR(50) NOT NULL,
     `phone` VARCHAR(20) DEFAULT NULL,
@@ -61,4 +72,3 @@ CREATE TABLE IF NOT EXISTS `images` (
     `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 );
-

@@ -39,22 +39,22 @@ public class BeanConfig {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return mapper;
     }
-
-    @Bean
-    public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-        resolver.setDefaultEncoding("UTF-8");
-        return resolver;
-    }
-
-    @Bean
-    public Cloudinary cloudinary() {
-        Cloudinary c = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", CLOUDINARYNAME,
-                "api_key", CLOUDINARYKEY,
-                "secure", true
-        ));
-
-        return c;
-    }
+//
+//    @Bean
+//    public CommonsMultipartResolver multipartResolver() {
+//        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+//        resolver.setDefaultEncoding("UTF-8");
+//        return resolver;
+//    }
+//
+//    @Bean
+//    public Cloudinary cloudinary() {
+//        Cloudinary c = new Cloudinary(ObjectUtils.asMap(
+//                "cloud_name", CLOUDINARYNAME,
+//                "api_key", CLOUDINARYKEY,
+//                "secure", true
+//        ));
+//
+//        return c;
+//    }
 }

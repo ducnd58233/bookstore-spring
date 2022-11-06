@@ -5,13 +5,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
-import static com.example.demo.common.Constants.DbTypeBook;
-import static com.example.demo.common.Constants.ShardTypeBook;
+import static com.example.demo.common.Constants.*;
 
 @Getter @Setter
 @Entity
@@ -32,7 +30,7 @@ public class BookLikeEntity {
     private OffsetDateTime createdAt;
 
     public String getUserId() {
-        UID val = new UID(bookLikeId.getUserRid(), DbTypeBook, ShardTypeBook);
+        UID val = new UID(bookLikeId.getUserRid(), DbTypeUser, ShardTypeUser);
         this.setUserId(String.valueOf(val));
         return String.valueOf(val);
     }
